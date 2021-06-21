@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>TestJena</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <project.jmodsdir>${project.basedir}/jmods</project.jmodsdir>
+        <project.jdk.version>11.0.10+9</project.jdk.version>
+        <project.javafx.version>11.0.2</project.javafx.version>
+        <project.mac.jmods></project.mac.jmods>
+        <project.jdk.jmodspath>
+            ${project.jmodsdir}/${project.os.family}/jdk-${project.jdk.version}/${project.mac.jmods}jmods
+        </project.jdk.jmodspath>
+        <project.javafx.jmodspath>
+            ${project.jmodsdir}/${project.os.family}/javafx-jmods-${project.javafx.version}
+        </project.javafx.jmodspath>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <properties>
+                <project.os.family>windows</project.os.family>
+                <project.jdk.extension>zip</project.jdk.extension>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <properties>
+                <project.os.family>linux</project.os.family>
+                <project.jdk.extension>tar.gz</project.jdk.extension>
+            </properties>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <properties>
+                <project.os.family>mac</project.os.family>
+                <project.jdk.extension>tar.gz</project.jdk.extension>
+                <project.mac.jmods>Contents/Home/</project.mac.jmods>
+            </properties>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>15.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>15.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-core</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena-iri</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>1.0.0.Beta2</version>
+                <executions>
+                    <execution>
+                        <id>add-module-info-to-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <overwriteExistingFiles>true</overwriteExistingFiles>
+                            <modules>
+<!--                                <module>-->
+<!--                                    <artifact>-->
+<!--                                        <groupId>org.apache.jena</groupId>-->
+<!--                                        <artifactId>jena-core</artifactId>-->
+<!--                                    </artifact>-->
+<!--                                    <moduleInfoSource>-->
+<!--                                        module org.apache.jena.core {-->
+<!--                                        requires java.xml.crypto;-->
+
+<!--                                        requires transitive java.xml;-->
+
+<!--                                        exports org.apache.jena;-->
+<!--                                        exports org.apache.jena.assembler;-->
+<!--                                        exports org.apache.jena.assembler.assemblers;-->
+<!--                                        exports org.apache.jena.assembler.exceptions;-->
+<!--                                        exports org.apache.jena.datatypes;-->
+<!--                                        exports org.apache.jena.datatypes.xsd;-->
+<!--                                        exports org.apache.jena.datatypes.xsd.impl;-->
+<!--                                        exports org.apache.jena.enhanced;-->
+<!--                                        exports org.apache.jena.ext.xerces;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.dv;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.dv.util;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.dv.xs;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.validation;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.xpath.regex;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.xs;-->
+<!--                                        exports org.apache.jena.ext.xerces.impl.xs.util;-->
+<!--                                        exports org.apache.jena.ext.xerces.jaxp.datatype;-->
+<!--                                        exports org.apache.jena.ext.xerces.util;-->
+<!--                                        exports org.apache.jena.ext.xerces.xni;-->
+<!--                                        exports org.apache.jena.ext.xerces.xs;-->
+<!--                                        exports org.apache.jena.ext.xerces.xs.datatypes;-->
+<!--                                        exports org.apache.jena.graph;-->
+<!--                                        exports org.apache.jena.graph.compose;-->
+<!--                                        exports org.apache.jena.graph.impl;-->
+<!--                                        exports org.apache.jena.irix;-->
+<!--                                        exports org.apache.jena.mem;-->
+<!--                                        exports org.apache.jena.ontology;-->
+<!--                                        exports org.apache.jena.ontology.impl;-->
+<!--                                        exports org.apache.jena.rdf.listeners;-->
+<!--                                        exports org.apache.jena.rdf.model;-->
+<!--                                        exports org.apache.jena.rdf.model.impl;-->
+<!--                                        exports org.apache.jena.rdfxml.xmlinput;-->
+<!--                                        exports org.apache.jena.rdfxml.xmlinput.impl;-->
+<!--                                        exports org.apache.jena.rdfxml.xmlinput.states;-->
+<!--                                        exports org.apache.jena.rdfxml.xmloutput;-->
+<!--                                        exports org.apache.jena.rdfxml.xmloutput.impl;-->
+<!--                                        exports org.apache.jena.reasoner;-->
+<!--                                        exports org.apache.jena.reasoner.rulesys;-->
+<!--                                        exports org.apache.jena.reasoner.rulesys.builtins;-->
+<!--                                        exports org.apache.jena.reasoner.rulesys.impl;-->
+<!--                                        exports org.apache.jena.reasoner.transitiveReasoner;-->
+<!--                                        exports org.apache.jena.shared;-->
+<!--                                        exports org.apache.jena.shared.impl;-->
+<!--                                        exports org.apache.jena.sys;-->
+<!--                                        exports org.apache.jena.ttl;-->
+<!--                                        exports org.apache.jena.ttl.turtle;-->
+<!--                                        exports org.apache.jena.ttl.turtle.parser;-->
+<!--                                        exports org.apache.jena.util;-->
+<!--                                        exports org.apache.jena.util.iterator;-->
+<!--                                        exports org.apache.jena.vocabulary;-->
+
+<!--                                        provides org.apache.jena.sys.JenaSubsystemLifecycle with-->
+<!--                                        org.apache.jena.sys.InitJenaCore;-->
+
+<!--                                        }-->
+<!--                                    </moduleInfoSource>-->
+<!--                                </module>-->
+<!--                                <module>-->
+<!--                                    <artifact>-->
+<!--                                        <groupId>org.apache.jena</groupId>-->
+<!--                                        <artifactId>jena-iri</artifactId>-->
+<!--                                    </artifact>-->
+<!--                                    <moduleInfoSource>-->
+<!--                                        open module org.apache.jena.iri {-->
+<!--                                        requires transitive java.xml;-->
+<!--                                        }-->
+<!--                                    </moduleInfoSource>-->
+<!--                                </module>-->
+                            </modules>
+                            <module>
+                                <mainClass>org.example.Main</mainClass>
+                                <moduleInfoFile>${project.build.sourceDirectory}/module-info.java</moduleInfoFile>
+                            </module>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.6.1</version>
+                <executions>
+                    <execution>
+                        <id>download-jdk</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>
+                                https://api.adoptopenjdk.net/v3/binary/version/jdk-${project.jdk.version}/${project.os.family}/x64/jdk/hotspot/normal/adoptopenjdk?project=jdk
+                            </url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.jmodsdir}/${project.os.family}/</outputDirectory>
+                            <outputFileName>jdk.${project.jdk.extension}</outputFileName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>download-javafx</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>
+                                https://gluonhq.com/download/javafx-${project.javafx.version}-jmods-${project.os.family}
+                            </url>
+                            <unpack>true</unpack>
+                            <outputDirectory>${project.jmodsdir}/${project.os.family}</outputDirectory>
+                            <outputFileName>javafx-jmods.zip</outputFileName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>11</source>
+                    <target>11</target>
+                    <release>11</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.5</version>
+                <configuration>
+                    <mainClass>org.example.Main</mainClass>
+                    <stripDebug>true</stripDebug>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <noManPages>true</noManPages>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>run</id>
+                    </execution>
+                    <execution>
+                        <id>debug</id>
+                        <configuration>
+                            <options>
+                                <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000
+                                </option>
+                            </options>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>package</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jlink</goal>
+                        </goals>
+                        <configuration>
+                            <launcher>Launcher</launcher>
+                            <jmodsPath>
+                                ${project.jdk.jmodspath}:${project.javafx.jmodspath}:${project.basedir}:${project.build.directory}/modules
+                            </jmodsPath>
+                            <ignoreSigningInformation>true</ignoreSigningInformation>
+                            <includePathExceptionsInClasspath>true</includePathExceptionsInClasspath>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

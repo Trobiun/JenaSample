@@ -1,0 +1,10 @@
+module TestJena {
+    requires javafx.fxml;
+    requires javafx.controls;
+    requires java.desktop;
+
+    requires org.apache.jena.core;
+
+    opens org.example to javafx.fxml;
+    exports org.example;
+}
